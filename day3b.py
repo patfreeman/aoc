@@ -1,24 +1,31 @@
 #!/usr/bin/env python
-import re
-import sys
+import argparse
 
-fp = open('input3.txt', 'r')
+parser = argparse.ArgumentParser(description='Finds The number of valid triangles')
+parser.add_argument('input_file', metavar='<inputfile>', type=str, default='input3.txt', nargs = '?',
+		help='the name of the input file. defaults to input3.txt')
+parser.add_argument('-v', '--verbose', action='store_true',
+		help='enable verbose output')
+args = parser.parse_args()
+
+fp = open(args.input_file, 'r')
 
 cnt = 0
-def test(side1, side2, side3):
-	if int(side1) < int(side2) + int(side3) and int(side2) < int(side1) + int(side3) and int(side3) < int(side1) + int(side2):
+def test(sides):
+	if sides[0] < sides[1] + sides[2]:
 		return True
 
 line1 = fp.readline()
 while line1:
-	line2 = fp.readline();
-	line3 = fp.readline();
-	side1 = re.split('\s+', line1.strip())
-	side2 = re.split('\s+', line2.strip())
-	side3 = re.split('\s+', line3.strip())
+	line2 = fp.readline()
+	line3 = fp.readline()
+	side1 = line1.strip().split()
+	side2 = line2.strip().split()
+	side3 = line3.strip().split()
 	for index in range(0,len(side1)):
-		if test(side1[index], side2[index], side3[index]):
+		if test(sorted(map(int,(side1[index], side2[index], side3[index])), reverse=True)):
 			cnt+=1
-		print side1[index] + " " + side2[index] + " " + side3[index] + " " + str(cnt)
+		if args.verbose:
+			print side1[index] + " " + side2[index] + " " + side3[index] + " " + str(cnt)
 	line1 = fp.readline();
 print cnt
