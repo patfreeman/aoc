@@ -29,3 +29,4 @@ while line1:
 			print side1[index] + " " + side2[index] + " " + side3[index] + " " + str(cnt)
 	line1 = fp.readline();
 print cnt
+fp.close()

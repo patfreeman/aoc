@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
 import hashlib
-import sys
 
 id="ugkcyxxp"
 cnt=0

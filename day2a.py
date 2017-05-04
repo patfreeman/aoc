@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 import argparse
-import sys
 
 parser = argparse.ArgumentParser(description='Finds the bathroom code')
 parser.add_argument('input_file', metavar='<inputfile>', type=str, default='input2.txt', nargs = '?',
@@ -47,4 +46,4 @@ for line in fp.readlines():
 			print "Moving " + dir + " to location " + str(keypad[y+1][x+1]) + ", coordinates [" + str(x) + "," + str(y) + "]"
 	code = code + str(keypad[y+1][x+1])
 print code
-sys.exit(0)
+fp.close()

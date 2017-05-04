@@ -47,3 +47,4 @@ for line in fp.readlines():
 			print "Moving " + dir + " to location " + str(keypad[y][x]) + ", coordinates [" + str(x) + "," + str(y) + "]"
 	code = code + str(keypad[y][x])
 print code
+fp.close()

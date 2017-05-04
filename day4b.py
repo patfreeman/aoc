@@ -44,3 +44,4 @@ for line in fp.readlines():
 				room_name = room_name + chr( ((ord(char)-97) + int(data.group(2))) % 26 + 97 )
 		if re.match('north.*pole', room_name):
 			print room_name + " is in sector " + data.group(2)
+fp.close()

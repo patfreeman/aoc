@@ -17,3 +17,4 @@ for line in fp.readlines():
 	if args.verbose:
 		print " ".join(map(str,sides)) + " " + str(cnt)
 print cnt
+fp.close()

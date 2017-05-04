@@ -103,3 +103,4 @@ for direction in input.split(', '):
 	print "Go " + str(ew) + " blocks east"
 total_dist = abs(ns) + abs(ew)
 print total_dist
+fp.close()

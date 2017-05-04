@@ -39,3 +39,4 @@ for line in fp.readlines():
 	if data.group(3) == chksum(re.sub(r'-', r'', data.group(1))):
 		total += int(data.group(2))
 print str(total)
+fp.close()
