@@ -1,6 +1,14 @@
 #!/usr/bin/env python
+import argparse
 import re
 import string
+
+parser = argparse.ArgumentParser(description='Finds the number of valid rooms')
+parser.add_argument('input_file', metavar='<inputfile>', type=str, default='input4.txt', nargs = '?',
+                help='the name of the input file. defaults to input4.txt')
+parser.add_argument('-v', '--verbose', action='store_true',
+                help='enable verbose output')
+args = parser.parse_args()
 
 def chksum(data):
 	ret = ""
@@ -14,29 +22,33 @@ def chksum(data):
 		try:
 			occurance_dict[value]
 		except:
-			occurance_dict[value] = {}
-		try:
-			occurance_dict[value]['value']
-		except:
-			occurance_dict[value]['value'] = value
-			occurance_dict[value]['keys'] = []
-		if value == occurance_dict[value]['value']:
-			occurance_dict[value]['keys'].append(key)
+			occurance_dict[value] = []
+		occurance_dict[value].append(key)
+	if args.verbose:
+		print occurance_dict
 	for key in sorted(occurance_dict.keys(), reverse=True):
 		if tops == 0:
 			break
-		for letter in sorted(occurance_dict[key]['keys']):
+		for letter in sorted(occurance_dict[key]):
 			ret = ret + letter
 			tops -= 1
 			if tops == 0:
-				break
-	return ret
+				return ret
 
 total = 0
-fp = open('input4.txt', 'r')
+fp = open(args.input_file, 'r')
 for line in fp.readlines():
+	if args.verbose:
+		print "Checking line " + line.strip()
 	data = re.match(r'^([a-z\-]*)-(\d+)\[(\w{5})\]\n',line)
-	if data.group(3) == chksum(re.sub(r'-', r'', data.group(1))):
+	checksum = chksum(re.sub(r'-', r'', data.group(1)))
+	if data.group(3) == checksum:
 		total += int(data.group(2))
+		if args.verbose:
+			print "Calculated chksums match: " + checksum
+			print "Added sector " + data.group(2) + " to total " + str(total)
+	else:
+		if args.verbose:
+			print "Calculated chksums mismatch: " + data.group(3) + " != " + checksum
 print str(total)
 fp.close()
