@@ -10,27 +10,22 @@ def chksum(data):
 
 	for char in data:
 		chars[char] += 1
-	for key, value in sorted(chars.iteritems(), key=lambda (k,v): (v,k), reverse=True):
+	for key, value in sorted(chars.iteritems(), key=lambda (k,v): (v,k)):
 		try:
 			occurance_dict[value]
 		except:
-			occurance_dict[value] = {}
-		try:
-			occurance_dict[value]['value']
-		except:
-			occurance_dict[value]['value'] = value
-			occurance_dict[value]['keys'] = []
-		if value == occurance_dict[value]['value']:
-			occurance_dict[value]['keys'].append(key)
+			occurance_dict[value] = []
+		occurance_dict[value].append(key)
+	if args.verbose:
+		print occurance_dict
 	for key in sorted(occurance_dict.keys(), reverse=True):
 		if tops == 0:
 			break
-		for letter in sorted(occurance_dict[key]['keys']):
+		for letter in sorted(occurance_dict[key]):
 			ret = ret + letter
 			tops -= 1
 			if tops == 0:
-				break
-	return ret
+				return ret
 
 fp = open('input4.txt', 'r')
 for line in fp.readlines():
