@@ -1,6 +1,14 @@
 #!/usr/bin/env python
+import argparse
 import re
 import string
+
+parser = argparse.ArgumentParser(description='Finds the sector of theo North Pole oject storage room')
+parser.add_argument('input_file', metavar='<inputfile>', type=str, default='input4.txt', nargs = '?',
+		help='the name of the input file. defaults to input4.txt')
+parser.add_argument('-v', '--verbose', action='store_true',
+		help='enable verbose output')
+args = parser.parse_args()
 
 def chksum(data):
 	ret = ""
@@ -27,10 +35,13 @@ def chksum(data):
 			if tops == 0:
 				return ret
 
-fp = open('input4.txt', 'r')
+fp = open(args.input_file, 'r')
 for line in fp.readlines():
 	data = re.match(r'^([a-z\-]*)-(\d+)\[(\w{5})\]\n',line)
-	if data.group(3) == chksum(re.sub(r'-', r'', data.group(1))):
+	checksum = chksum(re.sub(r'-', r'', data.group(1)))
+	if data.group(3) == checksum:
+		if args.verbose:
+			print "Found a valid room in " + line.strip()
 		room_name = ''
 		for char in data.group(1):
 			if char == '-':
@@ -38,5 +49,8 @@ for line in fp.readlines():
 			else:
 				room_name = room_name + chr( ((ord(char)-97) + int(data.group(2))) % 26 + 97 )
 		if re.match('north.*pole', room_name):
-			print room_name + " is in sector " + data.group(2)
+			if args.verbose:
+				print "Found a valid North Pole room called " + room_name + ", it is in sector " + data.group(2) + "."
+			print data.group(2)
+
 fp.close()
