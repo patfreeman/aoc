@@ -5,9 +5,9 @@ import string
 
 parser = argparse.ArgumentParser(description='Finds the number of valid rooms')
 parser.add_argument('input_file', metavar='<inputfile>', type=str, default='input4.txt', nargs = '?',
-                help='the name of the input file. defaults to input4.txt')
+		help='the name of the input file. defaults to input4.txt')
 parser.add_argument('-v', '--verbose', action='store_true',
-                help='enable verbose output')
+		help='enable verbose output')
 args = parser.parse_args()
 
 def chksum(data):
