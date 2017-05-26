@@ -22,4 +22,4 @@ while len(password) < 8:
                 sys.stdout.write(spinner[(i/SPINNER_MOD)%len(spinner)])
                 sys.stdout.flush()
 sys.stdout.write("\r")
-print "".join(password)
+print password
