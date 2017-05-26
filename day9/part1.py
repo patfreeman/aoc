@@ -38,5 +38,4 @@ output = ""
 fp = open(args.input_file, 'r')
 for line in fp.readlines():
 	output += decompress(line)
-print output
 print len(output)
